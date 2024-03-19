@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Gantt Chart</title>
+  <style>
+    .gantt {
+      display: flex;
+      flex-direction: row; /* Display tasks in a single line */
+      align-items: center;
+    }
+
+    .bar {
+      padding: 5px;
+      border-radius: 5px;
+      margin: 1px;
+      text-align: center;
+      background-color: cyan;
+      border: 1px solid black;
+      position: relative;
+    }
+
+    .time {
+      position: absolute;
+      bottom: -15px;
+      font-size: 12px;
+    }
+
+    .start-time {
+      left: 0;
+    }
+
+    .end-time {
+      right: 0;
+    }
+
+    .idle-bar {
+      padding: 5px;
+      margin: 1px;
+      text-align: center;
+      background-color: #f0f0f0;
+      border: 1px solid black;
+      border-radius: 5px;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="gantt" id="ganttChart">
+  </div>
+
+  <script>
+    const arrivalTime = [1,7,10,12];
+    const serviceTime = [4,2,5,3];
+
+    const ganttChart = document.getElementById('ganttChart');
+
+    let currentTime = arrivalTime[0];
+    for (let i = 0; i < arrivalTime.length; i++) {
+      if (i>0){
+      if (currentTime < arrivalTime[i]) {
+        // Add idle bar if there is idle time
+        const idleTime = arrivalTime[i] - currentTime;
+        const idleBar = document.createElement('div');
+        idleBar.className = 'idle-bar';
+        idleBar.style.width = `${idleTime * 20}px`;
+        idleBar.textContent = `Idle`;
+        
+
+        ganttChart.appendChild(idleBar);
+        currentTime = arrivalTime[i];
+      }
+    }
+
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      bar.style.width = `${serviceTime[i] * 30}px`;
+      //bar.style.backgroundColor = getRandomColor();
+      bar.textContent = `P${i + 1}`;
+
+      const startTime = document.createElement('div');
+      startTime.className = 'time start-time';
+      startTime.textContent = `${currentTime}`;
+
+      const endTime = document.createElement('div');
+      endTime.className = 'time end-time';
+      endTime.textContent = `${currentTime + serviceTime[i]}`;
+
+      bar.appendChild(startTime);
+      bar.appendChild(endTime);
+
+      currentTime += serviceTime[i];
+
+      ganttChart.appendChild(bar);
+    }
+/*
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+*/
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.css"
+          rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css"
+        />
+        <style>
+          *::-webkit-scrollbar {
+            display: none;
+          }
+
+          .gantt {
+            display: grid;
+
+            align-items: center;
+          }
+
+          .bar {
+            padding: 2px;
+            border-radius: 5px;
+            margin: 5px;
+            text-align: center;
+
+            background-color: #2daab8;
+            border: 1px solid black;
+            position: relative;
+          }
+
+          .time {
+            position: absolute;
+            bottom: -15px;
+            font-size: 12px;
+          }
+
+          .start-time {
+            left: 0;
+          }
+
+          .end-time {
+            right: 0;
+          }
+
+          .idle-bar {
+            padding: 5px;
+            margin: 1px;
+            text-align: center;
+            background-color: red;
+            color: white;
+            border: 1px solid black;
+            border-radius: 5px;
+            position: relative;
+          }
+        </style>
+        <title>Document</title>
+      </head>
+
+      <body class="bg-white">
+        <main class="max-w-7xl w-full text-[#2daab8]">
+          <!-- drawer init and show -->
+
+          <nav class="fixed top-0 z-50 w-full bg-white  border-gray-200 ">
+            <div class="px-3 py-3 lg:px-5 lg:pl-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center justify-start">
+                  <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-[#2daab8] focus:outline-none focus:ring-2 focus:ring-gray-200">
+                      <span class="sr-only">Open sidebar</span>
+                      <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                         <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                      </svg>
+                   </button>
+                  <a href="index.html" class="flex ml-2 md:mr-24">
+                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
+                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">Simulator</span>
+                  </a>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex items-center ml-3">
+                      <div>
+                        <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                          <span class="sr-only">Open user menu</span>
+                          <img class="w-8 h-8 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZWaMFY5pixU3BhenD4UmgEz6f4y-atdbygg&usqp=CAU" alt="user photo">
+                        </button>
+                      </div>
+                      <div class="z-50 hidden my-4 text-base list-none bg-[#2daab8] divide-y divide-[#2daab8] rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+                        <div class="px-4 py-3" role="none">
+                          <p class="text-sm text-gray-900 dark:text-white" role="none">
+                            Syed Shayan Hussain
+                          </p>
+                          <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                            syedshayanhussain6@gmail.com
+                          </p>
+                        </div>
+                        <ul class="py-1" role="none">
+                          <li>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#2daab8] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
+                          </li>
+                          <li>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#2daab8] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+                          </li>
+                          <li>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#2daab8] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
+                          </li>
+                          <li>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#2daab8] dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                          </li>
+          
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </nav>
+
+          <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 " aria-label="Sidebar">
+            <div class="h-full px-3 pb-4 overflow-y-auto bg-white ">
+               <ul class="space-y-2 font-medium">
+                  <li>
+                     <a href="#" class="flex items-center p-2 rounded-lg hover:bg-[#2daab8] hover:text-white group">
+                        <!-- <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                           <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
+                           <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
+                        </svg> -->
+                        <span class="ml-3">Dashboard</span>
+                     </a>
+                  </li>
+                  <li>
+                   <button type="button" class="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group hover:bg-[#2daab8] hover:text-white " aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                         <!-- <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
+                            <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
+                         </svg> -->
+                         <span class="flex-1 ml-3 text-left whitespace-nowrap">Simulations</span>
+                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                         </svg>
+                   </button>
+                   <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                         <li>
+                            <a href="mm1.html" class="flex items-center w-full p-2  transition duration-75 rounded-lg pl-11 group hover:bg-[#2daab8]  hover:text-white ">M/M/1 random simulation</a>
+                         </li>
+                         <li>
+                            <a href="mm2.html" class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-[#2daab8] hover:text-white ">M/M/2 random simulation</a>
+                         </li>
+                         <li>
+                           <a href="mg1.html" class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-[#2daab8]  hover:text-white">M/G/1 random simulation</a>
+                        </li>
+                        <li>
+                         <a href="mg2.html" class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-[#2daab8]  hover:text-white">M/G/2 random simulation</a>
+                      </li>
+                      <li>
+                         <a href="gg1.html" class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-[#2daab8]  hover:text-white">G/G/1 random simulation</a>
+                      </li>
+                      <li>
+                  <a href="gg2.html" class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-[#2daab8] hover:text-white">G/G/2 random simulation</a>
+               </li>
+<li>
+                  <a href="priority.html" class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-[#2daab8] hover:text-white">M/M/1 priority simulation</a>
+               </li>
+                      
+                   </ul>
+                </li>
+                <span
+                         class="flex items-center w-full p-2 pl-5 group border-b border-t"
+                         >Queuing Calculator</span
+                       >
+                       <li>
+                         <a
+                           href="mmc_cal.html"
+                           class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-5 group hover:bg-[#2daab8] hover:text-white"
+                           >M/M/C Calculator</a>
+                       </li>
+                       <li>
+                         <a
+                           href="mgc_cal.html"
+                           class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-5 group hover:bg-[#2daab8] hover:text-white"
+                           >M/G/C Calculator</a
+                         >
+                       </li>
+                       <li>
+                         <a
+                           href="ggc_cal.html"
+                           class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-5 group hover:bg-[#2daab8] hover:text-white"
+                           >G/G/C Calculator</a
+                         >
+                       </li>
+                
+                  
+                 
+                 
+               </ul>
+            </div>
+          </aside>
+
+          <div class="sm:ml-64">
+            <div class="flex items-center justify-center border-2 border-gray-700 bg-gray-50">
+                <div class="antialiased bg-gray-50 dark:bg-gray-900">
+                    <main class="p-4 md:ml-50 h-auto">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4"></div>
+                        
+                        <div class="flex justify-center">
+                            <div class="w-full max-w-5xl p-6 bg-[#2daab8] rounded-md shadow-md text-white">
+                                <div class="w-full max-w-5xl p-6 bg-[#2daab8] rounded-md shadow-md text-white">
+                                    <h1 class="text-2xl font-semibold mb-4">M/G/C Queuing Calculator</h1>
+            
+                                    <!-- Tabs Navigation -->
+                                    <div class="border-b border-gray-300 dark:border-gray-600 mb-4">
+                                        <nav class="flex">
+                                            <button class="py-2 px-4 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 focus:outline-none border-b-2 border-transparent hover:border-gray-600 dark:hover:border-gray-300 focus:border-gray-600 dark:focus:border-gray-300" onclick="openTab('tab1')">Mean</button>
+                                            <button class="py-2 px-4 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 focus:outline-none border-b-2 border-transparent hover:border-gray-600 dark:hover:border-gray-300 focus:border-gray-600 dark:focus:border-gray-300 ml-4" onclick="openTab('tab2')">Rate</button>
+                                        </nav>
+                                    </div>
+            
+                                    <!-- Tab Content -->
+                                    <div id="tab1" class="tab-content">
+                                        <label class="block mb-2">Mean Interarrival time </label>
+                                        <input id="mg1ArrivalMean" type="text" class="w-full px-2 py-1 border rounded mb-2 text-black" placeholder="Mean" step="0.01">
+                                        <label for="small" class="block mb-2">Service Distribution</label>
+                                        <select id="selectBox" onclick="updateLabelMean()" class="block w-full p-2 mb-4 text-sm font-semibold text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500  ">
+                                        <option selected>Select a Distribution</option>
+                                        <option value="Gm">Gamma Distribution</option>
+                                        <option value="Nm">Normal Distribution</option>
+                                        <option value="Un">Uniform Distribution</option>
+                                        </select>
+                                        <label id="Meanlabel" class="block mb-2">Mean Service Time </label>
+                                        <input id="mg1ServiceMean" type="text" class="w-full px-2 py-1 border rounded mb-4 text-black" placeholder="Mean" step="0.01">
+                                        <label id="Varlabel" class="block mb-2">Service Variance (σ2) </label>
+                                        <input id="mg1ServiceVar" type="text" class="w-full px-2 py-1 border rounded mb-6 text-black" placeholder="Variance" step="0.01">
+                                        <label class="block mb-2">No. of Servers </label>
+                                        <input id="server" type="number" class="w-full px-2 py-1 border rounded mb-6 text-black" placeholder="No. of Servers" step="1">
+                                        <button onclick="calculateMGCmean()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 focus:outline-none">Calculate</button>
+                                    </div>
+            
+                                    <div id="tab2" class="tab-content hidden">
+                                        <label class="block mb-2">No. of Arrivals</label>
+                                        <input id="Ar" type="text" class="w-full px-2 py-1 border rounded mb-2 text-black" placeholder="" step="1">
+                                        <label class="block mb-2">Time</label>
+                                        <input id="Ar_t" type="number" class="w-40 px-2 py-1 border rounded mb-4 text-black" placeholder="" step="0.01">
+                                        <select id="Ar_select" class="w-40 px-2 py-1 border rounded mb-4 text-black">
+                                            <option value="min">minutes</option>
+                                            <option value="sec">seconds</option>
+                                            <option value="hrs">hours</option>
+                                        </select>
+                                        <label for="small" class="block mb-2">Service Distribution</label>
+                                        <select id="selectBox2"  class="block w-full p-2 mb-4 text-sm font-semibold text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500  ">
+                                        <option selected>Select a Distribution</option>
+                                        <option value="Gm">Gamma Distribution</option>
+                                        <option value="Nm">Normal Distribution</option>
+                                        <option value="Un">Uniform Distribution</option>
+                                        
+                                        </select>
+                                        <label class="block mb-2">No. of Arrivals (Serves)</label>
+                                        <input id="Ser" type="text" class="w-full px-2 py-1 border rounded mb-2 text-black placeholder="" step="1">
+                                        <label class="block mb-2">Time</label>
+                                        <input id="Ser_t" type="number" class="w-40 px-2 py-1 border rounded mb-6 text-black" placeholder="" step="0.01">
+                                        <select id="Ser_select" class="w-40 px-2 py-1 border rounded mb-6 text-black">
+                                            <option value="min">minutes</option>
+                                            <option value="sec">seconds</option>
+                                            <option value="hrs">hours</option>
+                                        </select>
+                                        <label class="block mb-2">Service Variance (σ2)</label>
+                                        <input id="Ser_Var" type="text" class="w-full px-2 py-1 border rounded mb-6 text-black" placeholder="" step="0.01">
+                                        <label class="block mb-2">No. of Servers </label>
+                                        <input id="server2" type="number" class="w-full px-2 py-1 border rounded mb-6 text-black" placeholder="No. of Servers" step="1">
+                                        <button onclick="calculateMGCrate()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 focus:outline-none">Calculate</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </main>
+                    <h1 class="text-4xl font-bold text-center mt-8 mb-4 text-gray-300">Results</h1>
+                    <h1  class="text-4xl font-semibold text-center mt-8 mb-4 text-gray-300">
+                        Interarrival :: <p id="interarrivalDist" class="font-normal text-blue-500" style="display: inline;">-</p>
+                    </h1>
+                    
+                    <h1  class="text-4xl font-semibold text-center mt-8 mb-8 text-gray-300">
+                        Service :: <p id="serviceDist" class="font-normal text-blue-500" style="display: inline;">-</p>
+                    </h1>
+            
+                    
+                    <div
+                    class="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-16 md:grid-cols-2"
+                  >
+                    <figure
+                      class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700"
+                    >
+                      <blockquote
+                        class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400"
+                      >
+                        <h3
+                          id="lq1"
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          -
+                        </h3>
+                        <h5
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          Entities
+                        </h5>
+                        <p class="my-4">
+                          Average Number of an Entity in the Queue (Lq)
+                        </p>
+                      </blockquote>
+                    </figure>
+                    <figure
+                      class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700"
+                    >
+                      <blockquote
+                        class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400"
+                      >
+                        <h3
+                          id="ls1"
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          -
+                        </h3>
+                        <h5
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          Entities
+                        </h5>
+                        <p class="my-4">
+                          Average Number of an Entity in the System (Ls)
+                        </p>
+                      </blockquote>
+                    </figure>
+                    <figure
+                      class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700"
+                    >
+                      <blockquote
+                        class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400"
+                      >
+                        <h3
+                          id="wq1"
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          -
+                        </h3>
+                        <h5
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          Minutes
+                        </h5>
+                        <p class="my-4">
+                          Average Time of an Entity Spends in the Queue (Wq)
+                        </p>
+                      </blockquote>
+                    </figure>
+                    <figure
+                      class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700"
+                    >
+                      <blockquote
+                        class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400"
+                      >
+                        <h3
+                          id="ws1"
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          -
+                        </h3>
+                        <h5
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          Minutes
+                        </h5>
+                        <p class="my-4">
+                          Average Time of an Entity Spends in the System (Ws)
+                        </p>
+                      </blockquote>
+                    </figure>
+                    <figure
+                      class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700"
+                    >
+                      <blockquote
+                        class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400"
+                      >
+                        <h3
+                          id="p1"
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          -
+                        </h3>
+                        <p class="my-4">Server Utilization</p>
+                      </blockquote>
+                    </figure>
+                    <figure
+                      class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700"
+                    >
+                      <blockquote
+                        class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400"
+                      >
+                        <h3
+                          id="it1"
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          -
+                        </h3>
+                        <p class="my-4">Idle</p>
+                      </blockquote>
+                    </figure>
+  
+                    <figure
+                      class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700"
+                    >
+                      <blockquote
+                        class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400"
+                      >
+                        <h3
+                          id="Ns"
+                          class="text-lg font-semibold text-gray-900 dark:text-white"
+                        >
+                          -
+                        </h3>
+                        <p class="my-4">Number of Server</p>
+                      </blockquote>
+                    </figure>
+                    <figure
+                      class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700"
+                    >
+                      <blockquote
+                        class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400"
+                      ></blockquote>
+                    </figure>
+                  </div>
+            </div>
+            </div>
+           
+          </div>
+        </main>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script
+          type="text/javascript"
+          charset="utf8"
+          src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+       
+        <script>
+
+            function updateLabelMean()
+                    {
+                    const selectBox = document.getElementById("selectBox");
+                    //const selectLabel = document.getElementById("interarrivalDist");
+                    const sermeanLabel = document.getElementById("Meanlabel");
+                    const servarLabel = document.getElementById("Varlabel");
+            
+                    const selectedValue = selectBox.value;
+                    if (selectedValue === "Un") 
+                    {
+                        sermeanLabel.textContent="Min";
+                        servarLabel.textContent="Max";
+                        document.getElementById("mg1ServiceMean").placeholder = "Min";
+                        document.getElementById("mg1ServiceVar").placeholder = "Max";
+                    }
+                    else 
+                    {
+                        sermeanLabel.textContent="Mean Service Time";
+                        servarLabel.textContent="Service Variance (σs2)";
+                        document.getElementById("mg1ServiceMean").placeholder = "Mean";
+                        document.getElementById("mg1ServiceVar").placeholder = "Variance";
+                    }
+                    }
+            
+                    /*
+                    function updateLabelService()
+                    {
+                    const selectBox = document.getElementById("serviceselectbox");
+                    const selectLabel = document.getElementById("serviceDist");
+                    const selectedValue = selectBox.value;
+                    if (selectedValue === "Gm") {
+                        selectLabel.textContent = "Gamma Distribution";
+                    } else if (selectedValue === "Nm") {
+                        selectLabel.textContent = "Normal Distribution";
+                    }
+                    else if (selectedValue === "Un") {
+                        selectLabel.textContent = "Uniform Distribution";
+                    }
+                     else {
+                        selectLabel.textContent = "-";
+                    }
+                    }
+            
+                    function updateLabel2()
+                    {
+                    const selectBox = document.getElementById("selectBox2");
+                    const selectLabel = document.getElementById("serviceDist");
+                    const selectedValue = selectBox.value;
+                    if (selectedValue === "Gm") {
+                        selectLabel.textContent = "Gamma Distribution";
+                    } else if (selectedValue === "Nm") {
+                        selectLabel.textContent = "Normal Distribution";
+                    }
+                    else if (selectedValue === "Un") {
+                        selectLabel.textContent = "Uniform Distribution";
+                    }
+                     else {
+                        selectLabel.textContent = "-";
+                    }
+                    }
+                    */
+            
+            
+                    function openTab(tabName) 
+                    {
+                        const tabs = document.getElementsByClassName('tab-content');
+                        for (const tab of tabs) {
+                            tab.style.display = 'none';
+                        }
+                        document.getElementById(tabName).style.display = 'block';
+                    }
+            
+            
+                    function calculateMGCmean(){
+                        const arrivalRate1 = parseFloat(document.getElementById("mg1ArrivalMean").value);
+            
+                        let serviceRate1 = parseFloat(document.getElementById("mg1ServiceMean").value);
+                        let serviceVariance = parseFloat(document.getElementById("mg1ServiceVar").value);
+                        
+                        const numServers = parseInt(document.getElementById("server").value);
+                        const dist = document.getElementById("selectBox").value;
+            
+                        let serviceRate12;
+            
+                        if (arrivalRate1 <= 0 || serviceRate1 <= 0 || serviceVariance <= 0 || numServers <= 0 ) 
+                        {
+                        alert("Please enter valid positive values.");
+                        return;
+                        }
+                        if (dist === "Un") 
+                        {
+                            serviceRate12 = ((serviceRate1 + serviceVariance)/2);
+                            serviceVariance = Math.pow(serviceVariance-serviceRate1, 2)/12;
+                            //document.getElementById("serviceDist").innerHTML ="Gamma Distribution";
+                            serviceRate1=serviceRate12;
+                        } 
+                        
+                       console.log(serviceRate1);
+                       console.log(serviceVariance);
+            
+                        arrivalRate=1/arrivalRate1;
+                        serviceRate=1/serviceRate1;
+                        const utilization = arrivalRate / (numServers * serviceRate);
+                        //const rho = utilization; // Utilization per server in M/G/c
+                        if(utilization>=1)
+                        {
+                            alert("Not possible for Calculation....!!!, Server utilization greater than 1 or less than 0")
+                        }
+                        else
+                        {  
+            
+                            if (dist === "Gm") 
+                        {
+                            document.getElementById("serviceDist").innerHTML ="Gamma Distribution";
+                        } 
+                        else if (dist === "Nm") 
+                        {
+                            document.getElementById("serviceDist").innerHTML ="Normal Distribution";
+                        }
+                        else if (dist === "Un") {
+                            document.getElementById("serviceDist").innerHTML ="Uniform Distribution";
+                        }
+                        else {
+                            document.getElementById("serviceDist").innerHTML ="-";
+                        }
+                           const result=mgc(arrivalRate, serviceRate, serviceVariance, numServers)
+                            
+                            /*
+                            
+                        const Lq = (Math.pow(arrivalRate, 2) * serviceVariance + Math.pow(utilization, 2)) / (2 * (1 - rho));
+                        const Wq = Lq / arrivalRate;
+                        const Ls = Lq + utilization;
+                        const Ws = Ls / arrivalRate;
+                        const serverUtilization = utilization;
+                        const idleTime = 1 - serverUtilization;
+                        */
+            
+                        const Lq=result.Lq;
+                        const Wq=result.Wq;
+                        const Ls=result.Ls;
+                        const Ws=result.Ws;
+                        const Po=result.Po;
+            
+                        console.log(Lq);
+                        console.log(Ls);
+                        console.log(Ws);
+                        console.log(Wq);
+                        console.log(utilization);
+                        console.log(Po);
+            
+                        
+            
+            
+                        
+            
+                        document.getElementById("lq1").innerHTML =Lq.toFixed(2)+" ~ "+Math.round(Lq);
+                        document.getElementById("ls1").innerHTML =Ls.toFixed(2)+" ~ "+Math.round(Ls);
+                        document.getElementById("wq1").innerHTML =Wq.toFixed(2);
+                        document.getElementById("ws1").innerHTML =Ws.toFixed(2);
+                        document.getElementById("p1").innerHTML =utilization.toFixed(2)+" Or "+utilization.toFixed(2)*100+" % ";
+                        document.getElementById("it1").innerHTML =Po.toFixed(4)+" Or "+Po.toFixed(4)*100+" % ";
+            
+                        document.getElementById("interarrivalDist").innerHTML ="Exponential Distribution";
+                        //document.getElementById("serviceDist").innerHTML =dist;
+                        document.getElementById("Ns").innerHTML =numServers;
+                        }
+            
+                    }
+                    function calculateMGCrate(){
+                        const ar = parseFloat(document.getElementById("Ar").value);
+                        let ar_t = parseFloat(document.getElementById("Ar_t").value);
+                        const time1 = document.getElementById("Ar_select").value;
+                        
+                        const ser = parseFloat(document.getElementById("Ser").value);
+                        let ser_t = parseFloat(document.getElementById("Ser_t").value);
+                        const time2 = document.getElementById("Ser_select").value;
+                        const serviceVariance = parseFloat(document.getElementById("Ser_Var").value);
+                        
+                        const numberOfServers = parseInt(document.getElementById("server2").value);
+                        const dist = document.getElementById("selectBox2").value;
+                        
+                        if (ar <= 0 || ar_t <= 0 || ser <= 0 || ser_t <= 0 || serviceVariance <= 0 || numberOfServers <= 0) 
+                        {
+                        alert("Please enter valid positive values.");
+                        return;
+                        }
+            
+                        if (time1 === "sec") 
+                        {
+                            ar_t = ar_t / 60;
+                        }
+                        else if (time1 === "hrs") 
+                        {
+                            ar_t = ar_t * 60;
+                        }
+            
+                        if (time2 === "sec") 
+                        {
+                            ser_t = ser_t / 60;
+                        }
+                        else if (time2 === "hrs") 
+                        {
+                            ser_t = ser_t * 60;
+                        }
+            
+            
+            
+            
+            
+                        const arrivalRate=ar/ar_t;
+                        const serviceRate=ser/ser_t;
+                        const utilization = arrivalRate / (numberOfServers * serviceRate);
+                        if(utilization>=1){
+                          // alert("Not possible for Calculation....!!!")
+                      }
+                        else
+                        {
+                            if (dist === "Gm") {
+                            document.getElementById("serviceDist").innerHTML ="Gamma Distribution";
+                        } 
+                        else if (dist === "Nm") 
+                        {
+                            document.getElementById("serviceDist").innerHTML ="Normal Distribution";
+                        }
+                        else if (dist === "Un") {
+                            document.getElementById("serviceDist").innerHTML ="Uniform Distribution";
+                        }
+                        else {
+                            document.getElementById("serviceDist").innerHTML ="-";
+                            alert("Please Enter a Valid Distribution");
+                        }
+            
+                            const result=mgc(arrivalRate, serviceRate, serviceVariance, numberOfServers)
+            
+                            /*
+                            const Lq =
+                        (Math.pow(arrivalRate, 2) * serviceVariance +
+                        Math.pow(utilization, 2)) /
+                        (2 * (1 - utilization));
+                        const Wq = Lq / arrivalRate;
+                        const Ls = utilization + Lq;
+                        const Ws = Ls / arrivalRate;
+                        const serverUtilization = utilization;
+                        const idleTime = 1 - serverUtilization;
+            
+                        */
+                        const Lq=result.Lq;
+                        const Wq=result.Wq;
+                        const Ls=result.Ls;
+                        const Ws=result.Ws;
+                        const Po=result.Po;
+            
+                        console.log(Lq);
+                        console.log(Ls);
+                        console.log(Ws);
+                        console.log(Wq);
+                        console.log(utilization);
+                        console.log(Po);
+            
+                        document.getElementById("lq1").innerHTML =Lq.toFixed(2)+" ~ "+Math.round(Lq);
+                        document.getElementById("ls1").innerHTML =Ls.toFixed(2)+" ~ "+Math.round(Ls);
+                        document.getElementById("wq1").innerHTML =Wq.toFixed(2);
+                        document.getElementById("ws1").innerHTML =Ws.toFixed(2);
+                        document.getElementById("p1").innerHTML =utilization.toFixed(2)+" Or "+utilization.toFixed(2)*100+" % ";
+                        document.getElementById("it1").innerHTML =Po.toFixed(4)+" Or "+Po.toFixed(4)*100+" % ";
+            
+                        
+            
+                        document.getElementById("interarrivalDist").innerHTML ="Exponential Distribution";
+                        //document.getElementById("serviceDist").innerHTML =dist;
+                        document.getElementById("Ns").innerHTML =numberOfServers;
+                    }
+                        
+                    }
+            
+            
+            
+            
+                    function factorial(n) {
+                    if (n === 0) {
+                        return 1;
+                    } else {
+                        return n * factorial(n - 1);
+                    }
+                    }
+            
+                    function mmc(lambda, mu, c)
+                    {
+                        const rho = lambda / (c * mu);
+                        
+                        let sum = 0;
+                        
+                        for (i = 0; i < c; i++){
+                            sum += ((Math.pow((c*rho), i))/factorial(i))
+                        }
+                        sum += ((Math.pow((c*rho), c))/(factorial(c)*(1-rho)))
+                        
+                        const Po = 1 / sum;
+                        console.log(Po);
+            
+                        
+                        
+                        const Lq = (Po * Math.pow((lambda / mu), c) * rho) / (factorial(c) * Math.pow((1 - rho), 2))
+                        
+                        const Ls = (Math.pow(rho, c)/(factorial(c)*(1-rho)))
+                        
+                        const Wq = Lq/lambda;
+                        
+                        const Ws = Ls/lambda
+                        
+                        return {
+                            Lq: Lq,
+                            Wq: Wq,
+                            Ls: Ls,
+                            Ws: Ws,
+                            Po:Po,
+                            rho: rho
+                        }
+                    }
+            
+                    function mgc(lambda, mu, var2, c)
+                    {
+                        //const mu = mu;
+                        const serVar = var2;
+                        const rho = lambda/(c*mu)
+            
+                        const Cs2 = (serVar/Math.pow(1/mu,2))
+            
+                        const mmcResult = mmc(lambda, mu, c)
+            
+                        const Lq = mmcResult.Lq*((1+Cs2)/2)
+            
+                        const Wq = Lq/lambda
+            
+                        // const Ls = Lq + rho
+            
+                        const Ws = Wq + (1/mu);
+                        const Ls = lambda * Ws
+                        const Po=mmcResult.Po;
+            
+                        return {
+                            Lq: Lq,
+                            Wq: Wq,
+                            Ls: Ls,
+                            Ws: Ws,
+                            Po:Po,
+                            rho: rho
+                        }
+                    }
+            
+                    function mgcUn(lambda, min, max, c)
+                    {
+                        const mu = 1/((max + min)/2)
+                        const serVar = Math.pow(max-min, 2)/12
+                        const rho = lambda/(c*mu)
+            
+                        const Cs2 = (serVar/Math.pow(1/mu,2))
+            
+                        const mmcResult = mmc(lambda, mu, c)
+            
+                        const Lq = mmcResult.Lq*((1+Cs2)/2)
+            
+                        const Wq = Lq/lambda
+            
+                        const Ls = Lq + rho
+            
+                        const Ws = Ls/lambda
+            
+                        return {
+                            Lq: Lq,
+                            Wq: Wq,
+                            Ls: Ls,
+                            Ws: Ws,
+                            rho: rho
+                                }
+                    }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            </script>
+      </body>
+    </html>
+  </body>
+</html>
